@@ -39,7 +39,9 @@ fun LoginScreen(
 
     val focusManager = LocalFocusManager.current
     val emailFocusRequester = remember { FocusRequester() }
-    val context = LocalContext.current
+
+    val mensajeErrorEmail = stringResource(R.string.error_email)
+    val mensajeErrorPassword = stringResource(R.string.error_password)
 
     LaunchedEffect(Unit) {
         emailFocusRequester.requestFocus()
@@ -48,7 +50,7 @@ fun LoginScreen(
     fun validarEmail(): Boolean {
         val emailValido = email.isNotBlank() &&
                 Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
-        emailError = if (!emailValido) context.getString(R.string.error_email) else null
+        emailError = if (!emailValido) mensajeErrorEmail else null
         return emailValido
     }
 
@@ -56,7 +58,7 @@ fun LoginScreen(
         val regex = "^(?=.*[A-Z])(?=.*[0-9]).{8,}$".toRegex()
         val passValida = regex.matches(password)
         passwordError = if (!passValida) {
-            context.getString(R.string.error_password)
+            mensajeErrorPassword
         } else null
         return passValida
     }
